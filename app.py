@@ -71,24 +71,3 @@ def tobs():
     return jsonify(tobs)
 
 # Start date API
-@app.route("/api/v1.0/<start>")
-def temp_start(start):
-    query = session.query(func.min(Measurement.tobs), func.avg(Measurement.tobs), func.max(Measurement.tobs)).\
-    filter(Measurement.date >= start).all()
-
-    temp = list(np.ravel(query))
-
-    return jsonify(temp)
-
-# Start/End date API
-@app.route("/api/v1.0/<start>/<end>")
-def date_range(start, end):
-    query = session.query(func.min(Measurement.tobs), func.avg(Measurement.tobs), func.max(Measurement.tobs)).\
-    filter(Measurement.date >= start).filter(Measurement.date <= end).all()
-
-    temp =list(np.ravel(query))
-
-    return jsonify(temp)
-
-if __name__ == "__main__":
-    app.run(debug=True)
